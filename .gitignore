@@ -6,3 +6,7 @@
 
 # Ignore python temporarily directory
 __pycache__
+
+# MacOS garbage
+Icon[\r]
+Icon?
