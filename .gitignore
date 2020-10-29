@@ -3,6 +3,7 @@
 
 # Ignore temporarily Jupyter notebook directories & files
 .ipynb_checkpoints
+nbconvert
 
 # Ignore python temporarily directory
 __pycache__
