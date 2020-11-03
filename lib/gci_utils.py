@@ -208,21 +208,6 @@ def sync_gci_to_samp_peak(y, peaks, samples, le, ri):
     warnings.warn('sync_gci_to_samp_peak() is deprecated, use sync_predictions_to_samp_peak instead',
                   DeprecationWarning)
     return sync_predictions_to_samp_peak(y, peaks, samples, le, ri)
-    # # Start and end of the syncing interval (in samples)
-    # logger.debug('Syncing {} predictions in interval {} - {}  (in samples)'.format(len(y), le, ri))
-    # # Convert predictions to samples and sync them to minimum signal peak
-    # return sync_time_to_samp_peak(prediction2samples(y, peaks), samples, le, ri)
-    #
-    # # sync = []
-    # # n_samples = len(samples)
-    # # for pred in prediction2samples(y, peaks):
-    # #     beg = max(0, pred - le)
-    # #     end = min(pred + ri, n_samples-1)
-    # #     min_samp_idx = np.argmin(samples[beg:end+1]) + beg
-    # #     sync.append(min_samp_idx)
-    # #     logger.debug('GCI shifted in region ({:9.6f}, {:9.6f}): {:9.6f} --> {:9.6f}'.
-    # #                  format(beg, end, pred, min_samp_idx))
-    # # return np.array(sync)
 
 
 def sync_predictions_to_samp_peak(y, peaks, samples, le, ri):
@@ -285,47 +270,6 @@ def sync_time_to_samp_peak(marks, samples, le, ri):
         sync.append(min_idx)
         logger.debug('Syncing: {} --> {} ({} - {})'.format(m, min_idx, beg, end, l, r))
     return np.array(sync)
-
-# def sync_gci_to_samp_peak2(y, peaks, samples, le, ri):
-#     """Synchronize GCIs with minimum signal peak in the given interval
-#
-#     Args:
-#         y (array-like):                 Predictions of peaks to be a GCI (1 = GCI, 0 = no GCI).
-#         peaks (:obj:`numpy.array`):     Array of peak positions in samples (int).
-#         samples (:obj:`numpy.array`):   Array of waveform samples (int).
-#         le (float):                     Position in samples to the left for syncing a predicted GCI with a sample peak
-#         ri (float):                     Position in samples to the right for syncing a predicted GCI with a sample
-# peak
-#
-#     Returns:
-#          :obj:`numpy.array`: Array of GCI positions (times) in samples (array of int).
-#
-#     """
-#     # Start and end of the syncing interval (in samples)
-#     logger.debug('Syncing {} predictions in interval {} - {}  (in samples)'.format(len(y), le, ri))
-#     sync = []
-#     n_samples = len(samples)
-#     pms = Pm()
-#     for samp in prediction2samples(y, peaks):
-#         pms.append(OnePm(samp/16000., OnePm.type_V))
-#     avg_f0 = pms.get_f0(Pm.bound_idx, 0, len(pms)-1)
-#     avg_f0 = 150 if avg_f0 < 50 else avg_f0
-#     logger.debug('Average F0 = {}'.format(avg_f0))
-#     for idx, pm in enumerate(pms.get_all_pmks()):
-#         idx1 = max(0, idx-2)
-#         idx2 = min(len(pms)-1, idx+2)
-#         logger.debug('PM indeces for F0: {} - {}'.format(idx1, idx2))
-#         loc_f0 = pms.get_f0(Pm.bound_idx, idx1, idx2)
-#         loc_t0 = 1 / avg_f0 if loc_f0 == Pm.invalid_f0 else 1 / loc_f0
-#         logger.debug('local F0 = {} ({} - {})'.format(loc_f0, idx1, idx2))
-#         pred = pm.time
-#         beg = max(0, seconds2samples(pred - le*loc_t0, 16000))
-#         end = min(seconds2samples(pred + ri*loc_t0, 16000), n_samples-1)
-#         min_samp_idx = np.argmin(samples[beg:end+1]) + beg
-#         sync.append(min_samp_idx)
-#         logger.debug('GCI shifted in region ({}, {}): {} --> {}'.
-#                      format(beg, end, seconds2samples(pred, 16000), min_samp_idx))
-#     return np.array(sync)
 
 
 def samples2seconds(samp, samp_freq):

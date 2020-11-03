@@ -50,6 +50,7 @@ numba==0.51.2
 numpy==1.19.3
 opt-einsum==3.3.0
 packaging==20.4
+pandas==1.1.4
 pandocfilters==1.4.3
 parso==0.7.1
 pexpect==4.8.0
@@ -64,6 +65,7 @@ Pygments==2.7.2
 pyparsing==2.4.7
 pyrsistent==0.17.3
 python-dateutil==2.8.1
+pytz==2020.4
 PyYAML==5.3.1
 pyzmq==19.0.2
 requests==2.24.0
