@@ -19,6 +19,7 @@ WINFUNC = {None: None,
            'blackman': np.blackman,
            'bartlett': np.bartlett}
 
+# Convert probabilistic prediction to classes
 def proba2classes(yproba):
     ycls = np.zeros(yproba.shape, dtype='int8')
     ycls[yproba > 0.5] = 1
